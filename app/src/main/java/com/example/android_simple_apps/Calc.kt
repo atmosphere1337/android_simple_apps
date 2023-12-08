@@ -3,12 +3,15 @@ package com.example.android_simple_apps
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import com.example.android_simple_apps.InventBicycle;
 
 class Calc : Fragment() {
+    private lateinit var state : String;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -40,10 +43,13 @@ class Calc : Fragment() {
 
         view.findViewById<Button>(R.id.calc_btndel).setOnClickListener { char_del(output) }
         view.findViewById<Button>(R.id.calc_btnac).setOnClickListener { output_clear(output) }
+        view.findViewById<Button>(R.id.calc_btnans).setOnClickListener { output_eval(output) }
         return view
     }
     public fun char_input(digit : String, view :  TextView) {
-        view.text = view.text.toString() + digit;
+        var inventbicycle = InventBicycle();
+        if (inventbicycle.calc_input_step_validation(view.text.toString() + digit))
+            view.text = view.text.toString() + digit;
     }
     public fun char_del(view: TextView) {
         if (view.text.isNotEmpty())
@@ -51,5 +57,20 @@ class Calc : Fragment() {
     }
     public fun output_clear(view : TextView) {
         view.text = ""
+    }
+    public fun output_eval(view : TextView) {
+        var operand : String = "[0-9]+([.][0-9]+)?";
+        var operators : String = "[+\\-*/]";
+        var ptrn : String = operand + "(" + operators + operand + ")?";
+        if (Regex(ptrn).matches(view.text.toString()))
+        {
+            var inventbicycle = InventBicycle();
+            var ans =  inventbicycle.calc_parse_eval_ans(view.text.toString());
+            if (ans.toInt().toDouble() == ans)
+                view.text = ans.toInt().toString();
+            else
+                view.text = ans.toString();
+        }
+
     }
 }

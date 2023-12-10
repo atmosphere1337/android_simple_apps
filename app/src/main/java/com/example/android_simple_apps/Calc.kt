@@ -59,8 +59,20 @@ class Calc : Fragment() {
         view.text = ""
     }
     public fun output_eval(view : TextView) {
+        var inventbicycle = InventBicycle();
+        try {
+            var ans = inventbicycle.calc_parse_eval_ans(view.text.toString());
+            if (ans.toInt().toDouble() == ans)
+                view.text = ans.toInt().toString();
+            else
+                view.text = ans.toString();
+        } catch (e: Exception) {
+            view.text = view.text.toString();
+        }
+    }
+    public fun output_eval_backup(view : TextView) {
         var operand : String = "[0-9]+([.][0-9]+)?";
-        var operators : String = "[+\\-*/]";
+        var operators : String = "[+\\-/*]";
         var ptrn : String = operand + "(" + operators + operand + ")?";
         if (Regex(ptrn).matches(view.text.toString()))
         {
@@ -70,6 +82,7 @@ class Calc : Fragment() {
                 view.text = ans.toInt().toString();
             else
                 view.text = ans.toString();
+
         }
 
     }

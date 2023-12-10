@@ -62,52 +62,62 @@ class InventBicycle {
         var operator : Char = '?';
         var opstring1: String = "";
         var opstring2: String = "";
-
+        var transit : Boolean = false;
         for (char in input) {
             when (state) {
                 0 -> {
                     opstring1 += char;
                     when (char) {
-                        '-' -> state = 1
+                        '-' -> { state = 1; transit = false; }
                         in digits -> state = 2
                     }
                 }
                 1 -> {
                     opstring1 += char;
                     when (char) {
-                        in digits -> state = 2
+                        in digits -> { state = 2; transit = true; }
                     }
                 }
                 2 -> {
                     opstring1 += char;
                     when (char) {
-                        in digits -> state = 2
-                        '.' -> state = 3
-                        in operators -> { state = 4; opstring1 = opstring1.substring(0, opstring1.length - 1); operator = char;}
+                        in digits -> { state = 2; transit = true; }
+                        '.' -> { state = 3; transit = false; }
+                        in operators -> {   state = 4;
+                                            opstring1 = opstring1.substring(0, opstring1.length - 1);
+                                            operator = char;
+                                            transit = false;
+                                        }
                     }
                 }
                 3 -> {
                     opstring1 += char;
                     when (char) {
-                        in digits -> state = 3
-                        in operators -> { state = 4; opstring1 = opstring1.substring(0, opstring1.length - 1); operator = char;}
+                        in digits -> { state = 3; transit = true; }
+                        in operators -> {   state = 4;
+                                            opstring1 = opstring1.substring(0, opstring1.length - 1);
+                                            operator = char;
+                                            transit = false;
+                                        }
                     }
                 }
                 4 -> {
                     opstring2 += char;
                     when (char) {
-                        in digits -> state = 4
-                        '.' -> state = 5
+                        in digits -> { state = 4; transit = true; }
+                        '.' -> { state = 5; transit = false; }
                     }
                 }
                 5 -> {
                     opstring2 += char;
                     when (char) {
-                        in digits -> state = 5
+                        in digits -> { state = 5; transit = true; }
                     }
                 }
             }
         }
+        if (!transit)
+            throw Exception("incomplete sequence");
         operand1 = opstring1.toDouble();
         operand2 = opstring2.toDouble();
         return when (operator) {

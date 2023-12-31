@@ -19,6 +19,9 @@ class Menu : Fragment() {
         view.findViewById<Button>(R.id.btn_go_menu_calc).setOnClickListener {
             parentFragmentManager.beginTransaction().replace(R.id.mainframe, Calc()).commit()
         }
+        view.findViewById<Button>(R.id.btn_go_menu_notes).setOnClickListener {
+            parentFragmentManager.beginTransaction().replace(R.id.mainframe, Notes()).commit()
+        }
         return view
     }
 }

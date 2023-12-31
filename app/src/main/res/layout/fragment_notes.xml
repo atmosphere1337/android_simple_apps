@@ -4,22 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Menu">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Menu" />
+    tools:context=".Notes"
+>
 
     <Button
-        android:id="@+id/btn_go_menu_calc"
+        android:id="@+id/btn_notes_add_open"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calculator" />
+        android:text="Add note"
+    />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycle_notes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    />
+
     <Button
-        android:id="@+id/btn_go_menu_notes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Notes" />
+        android:id="@+id/btn_go_notes_menu"
+        android:layout_width = "match_parent"
+        android:layout_height = "wrap_content"
+        android:text = "Menu"
+    />
+
+
 
 </LinearLayout>

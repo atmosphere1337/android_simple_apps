@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".NotesEdit">
+
+    <EditText
+        android:id="@+id/notes_edit_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:singleLine="true"
+        android:text=""
+    />
+    <EditText
+        android:id="@+id/notes_edit_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:lines="15"
+        android:gravity="top"
+        android:text=""
+    />
+
+    <Button
+        android:id="@+id/notes_edit_delete"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Delete"
+    />
+    <Button
+        android:id="@+id/notes_edit_save"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="Save"
+    />
+
+</LinearLayout>

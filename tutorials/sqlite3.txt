@@ -1,0 +1,41 @@
+class FeedReaderDbHelper(context: Context) : SQLiteOpenHelper(context, "FeedReader.db", null, 1) {
+    override fun onCreate(db: SQLiteDatabase) {
+        db.execSQL("CREATE TABLE entry (_id INTEGER PRIMARY KEY, title TEXT, subtitle TEXT)")
+    }
+    override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        db.execSQL("DROP TABLE IF EXISTS entry")
+        onCreate(db)
+    }
+    override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
+        onUpgrade(db, oldVersion, newVersion)
+    }
+}
+
+
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val dbHelper = FeedReaderDbHelper(this@MainActivity);
+        val db = dbHelper.writableDatabase
+        val values = ContentValues().apply {
+            put("title", "title")
+            put("subtitle", "subtitle")
+        }
+        val values2 = ContentValues().apply {
+            put("title", "what")
+            put("subtitle", "now")
+        }
+        db?.insert("entry", null, values)
+        db?.update("entry", values2, "_id=?", arrayOf("1"))
+        db?.delete("entry", "_id=?", arrayOf("2"))
+        var cursr = db?.rawQuery("SELECT * FROM entry", null)
+        cursr?.moveToFirst()
+        cursr?.getString(0)
+
+        db?.close()
+        setContentView(R.layout.activity_main)
+        findViewById<TextView>(R.id.output).text = cursr?.getString(1) + " " + cursr?.getString( 2);
+    }
+}

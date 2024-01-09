@@ -4,22 +4,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Menu">
+    tools:context=".Menu"
+>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Menu" />
+        android:text="Menu"
+    />
 
     <Button
         android:id="@+id/btn_go_menu_calc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calculator" />
+        android:text="Calculator"
+    />
     <Button
         android:id="@+id/btn_go_menu_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Notes" />
+        android:text="Notes"
+    />
+    <Button
+        android:id="@+id/btn_go_menu_restreq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RESTrequests"
+    />
 
 </LinearLayout>

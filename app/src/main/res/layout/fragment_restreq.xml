@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Restreq">
+    tools:context=".Restreq"
+    android:id="@+id/relmain"
+>
 
     <TextView
         android:id="@+id/what"
@@ -39,5 +41,26 @@
             android:text="search"
         />
     </LinearLayout>
+    <Button
+        android:id="@+id/btn_go_restreq_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="400px"
+        android:layout_marginLeft="200px"
+        android:text="Menu"
+    />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rest_recycler_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="500px"
+        android:layout_marginLeft="500px"
+        android:padding="30px"
+        android:layout_weight="3"
+        android:background="@drawable/drawable_one"
+    />
 
 </RelativeLayout>

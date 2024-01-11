@@ -23,11 +23,15 @@ import retrofit2.http.Path
 
 
 
-class CustomAdapter(private val dataSet: Array<String>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapter(private val dataSet: Array<Comments>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var element: TextView
+        var name: TextView
+        var id: TextView
         init {
             element = view.findViewById(R.id.rest_recycler_textfield)
+            name = view.findViewById(R.id.rest_recycler_name)
+            id = view.findViewById(R.id.rest_recycler_id)
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomAdapter.ViewHolder {
@@ -37,7 +41,9 @@ class CustomAdapter(private val dataSet: Array<String>) : RecyclerView.Adapter<C
     }
 
     override fun onBindViewHolder(holder: CustomAdapter.ViewHolder, position: Int) {
-        holder.element.text = dataSet[position]
+        holder.element.text = dataSet[position].body
+        holder.name.text = dataSet[position].name
+        holder.id.text = dataSet[position].id.toString()
     }
 
     override fun getItemCount(): Int {
@@ -67,8 +73,7 @@ interface MyApi {
 }
 
 class Restreq : Fragment() {
-    private var field : String = ""
-    private val commentsArray : Array<Comments> = arrayOf<Comments>()
+    private var commentsArray : Array<Comments> = arrayOf<Comments>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,12 +91,7 @@ class Restreq : Fragment() {
                 if (response.isSuccessful) {
                     response.body()?.let {
                         for (comment in it) {
-                            /*
-                            Log.i("ZywOo", "onResponse ${comment.body}")
-                            field += comment.body
-                             */
-                            commentsArray.plus(comment)
-                            field += comment.body
+                            commentsArray = commentsArray.plus(comment)
                         }
                     }
                 }
@@ -99,15 +99,18 @@ class Restreq : Fragment() {
             override fun onFailure(call: retrofit2.Call<List<Comments>>, t: Throwable) {}
         })
 
-        val dataset = arrayOf("Hello WOrld Nahui", "World shit man", "Nahui what the fuck", "Shit now asdf", "Manas faskfjaskfjakj")
-        var adapter = CustomAdapter(dataset, )
+        var adapter = CustomAdapter(commentsArray)
         var cycler = view.findViewById<RecyclerView>(R.id.rest_recycler_main)
         cycler.layoutManager = LinearLayoutManager(context)
         cycler.adapter = adapter
 
 
         view.findViewById<Button>(R.id.rest_search_btn).setOnClickListener {
-            view.findViewById<TextView>(R.id.what).text = field
+            //view.findViewById<TextView>(R.id.what).text = field
+            adapter = CustomAdapter(commentsArray)
+            cycler = view.findViewById<RecyclerView>(R.id.rest_recycler_main)
+            cycler.layoutManager = LinearLayoutManager(context)
+            cycler.adapter = adapter
         }
         view.findViewById<Button>(R.id.btn_go_restreq_menu).setOnClickListener {
             parentFragmentManager.beginTransaction().replace(R.id.mainframe, Menu()).commit()
